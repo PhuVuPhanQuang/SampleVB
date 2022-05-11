@@ -2,9 +2,9 @@
 
 Public Class Dbbase
     Public Shared _exception As Exception = Nothing
-    Private Const _servername As String = "W06\SQLEXPRESS2017"
+    Private Const _servername As String = "LAPTOP-RAKLD1NN"
     Private Const _database As String = "Demo"
-    Private Const _password As String = "12345678"
+    Private Const _password As String = "123456789"
 
     Public Shared Function GetConnectString() As String
         Dim connectStr As String = String.Empty

@@ -11,9 +11,10 @@
     <AssemblyName>SampleVB</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -73,20 +74,25 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DATA\DbBase.vb" />
-    <Compile Include="FrmCopy.Designer.vb">
+    <Compile Include="Database\DbBase.vb" />
+    <Compile Include="DemoDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DemoDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmCopy.Designer.vb">
       <DependentUpon>FrmCopy.vb</DependentUpon>
     </Compile>
-    <Compile Include="FrmCopy.vb">
+    <Compile Include="Views\FrmCopy.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Function\DbFunction.vb" />
-    <Compile Include="Function\SinhVien.vb" />
+    <Compile Include="Database\DbFunction.vb" />
+    <Compile Include="Models\SinhVien.vb" />
     <Compile Include="test.vb" />
-    <Compile Include="Form1.vb">
+    <Compile Include="Views\Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
+    <Compile Include="Views\Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
@@ -106,12 +112,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Views\FrmExcel.Designer.vb">
+      <DependentUpon>FrmExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Views\Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmCopy.resx">
+    <EmbeddedResource Include="Views\FrmCopy.resx">
       <DependentUpon>FrmCopy.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -120,8 +132,22 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmExcel.resx">
+      <DependentUpon>FrmExcel.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="DemoDataSet.xsc">
+      <DependentUpon>DemoDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DemoDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DemoDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DemoDataSet.xss">
+      <DependentUpon>DemoDataSet.xsd</DependentUpon>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
