@@ -153,15 +153,11 @@ Partial Class frmCopy
         Me.BackgroundWorker1.WorkerReportsProgress = True
         Me.BackgroundWorker1.WorkerSupportsCancellation = True
         '
-        'Timer1
-        '
-        '
         'lblLoading
         '
-        Me.lblLoading.AutoSize = True
-        Me.lblLoading.Location = New System.Drawing.Point(381, 192)
+        Me.lblLoading.Location = New System.Drawing.Point(352, 192)
         Me.lblLoading.Name = "lblLoading"
-        Me.lblLoading.Size = New System.Drawing.Size(38, 12)
+        Me.lblLoading.Size = New System.Drawing.Size(130, 19)
         Me.lblLoading.TabIndex = 7
         Me.lblLoading.Text = "Label3"
         '
@@ -169,7 +165,7 @@ Partial Class frmCopy
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(814, 223)
+        Me.ClientSize = New System.Drawing.Size(804, 220)
         Me.Controls.Add(Me.lblLoading)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
@@ -180,7 +176,6 @@ Partial Class frmCopy
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents pbLoading As ProgressBar

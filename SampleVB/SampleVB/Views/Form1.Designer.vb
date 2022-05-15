@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,14 @@ Partial Class Form1
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.DGVSinhVien = New System.Windows.Forms.DataGridView()
+        Me.ColMaSV = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColHoTen = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColNgaySinh = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColNoiSinh = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColGioiTinh = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.txtGioiTinh = New System.Windows.Forms.TextBox()
         Me.txtNoiSinh = New System.Windows.Forms.TextBox()
@@ -38,11 +43,7 @@ Partial Class Form1
         Me.btnXoa = New System.Windows.Forms.Button()
         Me.btnSua = New System.Windows.Forms.Button()
         Me.btnThem = New System.Windows.Forms.Button()
-        Me.ColMaSV = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColHoTen = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColNgaySinh = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColNoiSinh = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColGioiTinh = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         CType(Me.DGVSinhVien, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -50,6 +51,7 @@ Partial Class Form1
         '
         'DGVSinhVien
         '
+        Me.DGVSinhVien.AllowDrop = True
         Me.DGVSinhVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGVSinhVien.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColMaSV, Me.ColHoTen, Me.ColNgaySinh, Me.ColNoiSinh, Me.ColGioiTinh})
         Me.DGVSinhVien.Location = New System.Drawing.Point(12, 219)
@@ -57,6 +59,36 @@ Partial Class Form1
         Me.DGVSinhVien.RowTemplate.Height = 21
         Me.DGVSinhVien.Size = New System.Drawing.Size(782, 217)
         Me.DGVSinhVien.TabIndex = 0
+        '
+        'ColMaSV
+        '
+        Me.ColMaSV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ColMaSV.HeaderText = "Ma sinh vien"
+        Me.ColMaSV.Name = "ColMaSV"
+        '
+        'ColHoTen
+        '
+        Me.ColHoTen.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ColHoTen.HeaderText = "Ho ten "
+        Me.ColHoTen.Name = "ColHoTen"
+        '
+        'ColNgaySinh
+        '
+        Me.ColNgaySinh.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ColNgaySinh.HeaderText = "Ngay sinh"
+        Me.ColNgaySinh.Name = "ColNgaySinh"
+        '
+        'ColNoiSinh
+        '
+        Me.ColNoiSinh.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ColNoiSinh.HeaderText = "Noi sinh"
+        Me.ColNoiSinh.Name = "ColNoiSinh"
+        '
+        'ColGioiTinh
+        '
+        Me.ColGioiTinh.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ColGioiTinh.HeaderText = "Gioi tinh"
+        Me.ColGioiTinh.Name = "ColGioiTinh"
         '
         'GroupBox1
         '
@@ -196,46 +228,16 @@ Partial Class Form1
         Me.btnThem.Text = "Thêm "
         Me.btnThem.UseVisualStyleBackColor = True
         '
-        'ColMaSV
-        '
-        Me.ColMaSV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ColMaSV.HeaderText = "Ma sinh vien"
-        Me.ColMaSV.Name = "ColMaSV"
-        '
-        'ColHoTen
-        '
-        Me.ColHoTen.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ColHoTen.HeaderText = "Ho ten "
-        Me.ColHoTen.Name = "ColHoTen"
-        '
-        'ColNgaySinh
-        '
-        Me.ColNgaySinh.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ColNgaySinh.HeaderText = "Ngay sinh"
-        Me.ColNgaySinh.Name = "ColNgaySinh"
-        '
-        'ColNoiSinh
-        '
-        Me.ColNoiSinh.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ColNoiSinh.HeaderText = "Noi sinh"
-        Me.ColNoiSinh.Name = "ColNoiSinh"
-        '
-        'ColGioiTinh
-        '
-        Me.ColGioiTinh.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ColGioiTinh.HeaderText = "Gioi tinh"
-        Me.ColGioiTinh.Name = "ColGioiTinh"
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(806, 448)
+        Me.ClientSize = New System.Drawing.Size(819, 486)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.DGVSinhVien)
         Me.Name = "Form1"
-        Me.Text = "Form1"
+        Me.Text = "Basic VB.NET"
         CType(Me.DGVSinhVien, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
@@ -265,4 +267,5 @@ Partial Class Form1
     Friend WithEvents ColNgaySinh As DataGridViewTextBoxColumn
     Friend WithEvents ColNoiSinh As DataGridViewTextBoxColumn
     Friend WithEvents ColGioiTinh As DataGridViewTextBoxColumn
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
 End Class

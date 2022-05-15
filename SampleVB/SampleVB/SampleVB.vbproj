@@ -74,28 +74,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ExportFile.vb" />
+    <Compile Include="Common\InsertMultiRows.vb" />
+    <Compile Include="Common\ReadFile.vb" />
     <Compile Include="Database\DbBase.vb" />
+    <Compile Include="Database\DbFunction.vb" />
     <Compile Include="DemoDataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmCopy.Designer.vb">
-      <DependentUpon>FrmCopy.vb</DependentUpon>
+    <Compile Include="Views\Form1.designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmCopy.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Database\DbFunction.vb" />
-    <Compile Include="Models\SinhVien.vb" />
-    <Compile Include="test.vb" />
     <Compile Include="Views\Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Models\SinhVien.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -112,7 +107,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Views\FrmExcel.Designer.vb">
+    <Compile Include="Views\FrmCopy.designer.vb">
+      <DependentUpon>FrmCopy.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmCopy.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmExcel.designer.vb">
       <DependentUpon>FrmExcel.vb</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmExcel.vb">
@@ -123,14 +124,14 @@
     <EmbeddedResource Include="Views\Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FrmCopy.resx">
-      <DependentUpon>FrmCopy.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmCopy.resx">
+      <DependentUpon>FrmCopy.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmExcel.resx">
       <DependentUpon>FrmExcel.vb</DependentUpon>
@@ -158,6 +159,11 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ClosedXML">
+      <Version>0.95.4</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

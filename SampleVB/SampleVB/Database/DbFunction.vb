@@ -3,12 +3,32 @@ Imports System.Text
 Imports SampleVB.Form1
 
 Public Class DbFunction
-
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Message As String
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Private Property _errorMsg As String = String.Empty
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function GetMessage() As String
+        Return _errorMsg
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
     Public Function GetAll() As List(Of SinhVien)
-        Dim connection As SqlConnection
+        Dim connection As SqlConnection = Nothing
 
         Try
             'Viết câu sql lấy all
@@ -28,7 +48,8 @@ Public Class DbFunction
             Dim reader = command.ExecuteReader()
             While reader.Read() <> False
                 Dim sinhVienInfo As New SinhVien()
-                sinhVienInfo.MaSV = Int32.Parse(reader.GetValue(reader.GetOrdinal("MASV")))
+                'sinhVienInfo.MaSV = Int32.Parse(reader.GetValue(reader.GetOrdinal("MASV")))
+                sinhVienInfo.MaSV = reader.GetString(reader.GetOrdinal("MASV"))
                 sinhVienInfo.HoTen = reader.GetString(reader.GetOrdinal("HOTEN"))
                 sinhVienInfo.NgaySinh = reader.GetString(reader.GetOrdinal("NGAYSINH"))
                 sinhVienInfo.NoiSinh = reader.GetString(reader.GetOrdinal("NOISINH"))
@@ -39,80 +60,142 @@ Public Class DbFunction
             'Trả về List<SinhVien> đã get ở trên
             Return sinhVienInfos
         Catch ex As Exception
-            Message = ex.Message
+            Console.WriteLine(ex.Message)
+            'Message = ex.Message
             Return Nothing
         Finally
             Dbbase.Close(connection)
         End Try
     End Function
-    'Private Sub disp_data()
-    '    cmd = con.CreateCommand()
-    '    cmd.CommandType = CommandType.Text
-    '    cmd.CommandText = "select * from SinhVien"
-    '    cmd.ExecuteNonQuery()
-    '    Dim dt As New DataTable()
-    '    Dim da As New SqlDataAdapter(cmd)
-    '    da.Fill(dt)
-    '    DGVSinhVien.DataSource = dt
-    'End Sub
 
 
-    '    Private Sub btnThem_Click(sender As Object, e As EventArgs) Handles btnThem.Click
-    '        If con.State = ConnectionState.Open Then
-    '            con.Close()
+    Public Function Insert(ByVal them As SinhVien) As String
+        Dim connection As SqlConnection = Nothing
+        Dim errorMsg As String = ""
+        Try
+            Dim queryString As StringBuilder = New StringBuilder()
+            queryString.Append("  INSERT INTO SINHVIEN").Append(" ")
+            queryString.Append("  (").Append(" ")
+            queryString.Append("  MASV" & ",").Append(" ")
+            queryString.Append("  HOTEN" & ",").Append(" ")
+            queryString.Append("  NGAYSINH" & ",").Append(" ")
+            queryString.Append("  NOISINH" & ",").Append(" ")
+            queryString.Append("  GIOITINH" & " ").Append(" ")
+            queryString.Append(")").Append(" ")
+            queryString.Append("VALUES").Append(" ")
+            queryString.Append("(").Append(" ")
+            queryString.Append("  @masv" & ",").Append(" ")
+            queryString.Append("  @hoten" & ",").Append(" ")
+            queryString.Append("  @ngaysinh" & ",").Append(" ")
+            queryString.Append("  @noisinh" & ",").Append(" ")
+            queryString.Append("  @gioitinh" & " ").Append(" ")
+            queryString.Append(")").Append(" ")
+            connection = Dbbase.GetSqlConnection()
+            connection.Open()
+            Dim command As SqlCommand = New SqlCommand(queryString.ToString(), connection)
+            command.CommandType = CommandType.Text
+            Dim parameters As SqlParameterCollection = command.Parameters
+            parameters.AddWithValue("@masv", them.MaSV)
+            parameters.AddWithValue("@hoten", them.HoTen)
+            parameters.AddWithValue("@ngaysinh", them.NgaySinh)
+            parameters.AddWithValue("@noisinh", them.NoiSinh)
+            parameters.AddWithValue("@gioitinh", them.GioiTinh)
 
-    '        End If
-    '        con.Open()
+            Dim res As Integer = command.ExecuteNonQuery()
 
-    '        disp_data()
-    '    End Sub
+            If res <> 1 Then
+                GoTo TheEnd
+            End If
 
-    '    Private Sub btnXoa_Click(sender As Object, e As EventArgs) Handles btnXoa.Click
-    '        If con.State = ConnectionState.Open Then
-    '            con.Close()
 
-    '        End If
-    '        con.Open()
-    '        cmd = con.CreateCommand()
-    '        cmd.CommandType = CommandType.Text
-    '        cmd.CommandText = "delete from SinhVien where MASV='" + txtMaSV.Text + "'"
-    '        cmd.ExecuteNonQuery()
-    '        disp_data()
-    '    End Sub
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+            errorMsg = ex.Message
+            'GoTo TheEnd
+        Finally
+            Dbbase.Close(connection)
+        End Try
 
-    '    Private Sub btnSua_Click(sender As Object, e As EventArgs) Handles btnSua.Click
-    '        If con.State = ConnectionState.Open Then
-    '            con.Close()
+TheEnd:
+        Return errorMsg
+    End Function
 
-    '        End If
-    '        con.Open()
-    '        cmd = con.CreateCommand()
-    '        cmd.CommandType = CommandType.Text
-    '        cmd.CommandText = "update SinhVien set HOTEN = N'" + txtHoTen.Text + "', NGAYSINH ='" + txtNgaySinh.Text + "', NOISINH = N'" + txtNoiSinh.Text + "', GIOITINH = N'" + txtGioiTinh.Text + "' where MASV =" + txtMaSV.Text + ""
-    '        cmd.ExecuteNonQuery()
-    '        disp_data()
-    '    End Sub
 
-    '    Private Sub DGVSinhVien_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGVSinhVien.CellClick
-    '        Dim i As Integer
-    '        i = Convert.ToInt32(DGVSinhVien.SelectedCells.Item(0).Value.ToString())
-    '        cmd = con.CreateCommand()
-    '        cmd.CommandType = CommandType.Text
-    '        cmd.CommandText = "select * from SinhVien where MASV = " & i & ""
-    '        'Dim reader = cmd.ExecuteReader()
-    '        Dim dt As New DataTable()
-    '        Dim da As New SqlDataAdapter(cmd)
-    '        da.Fill(dt)
-    '        Dim dr As SqlClient.SqlDataReader
-    '        dr = cmd.ExecuteReader(CommandBehavior.CloseConnection)
-    '        While dr.Read
-    '            txtMaSV.Text = dr.GetString(0).ToString()
-    '            txtHoTen.Text = dr.GetString(1).ToString()
-    '            txtNgaySinh.Text = dr.GetString(2).ToString()
-    '            txtNoiSinh.Text = dr.GetString(3).ToString()
-    '            txtGioiTinh.Text = dr.GetString(4).ToString()
+    Public Function Delete(ByVal masv As String) As Boolean
+        Dim retDel As Boolean = False
+        Dim connection As SqlConnection = Nothing
 
-    '        End While
-    '    End Sub
+        Try
+            Dim queryString As StringBuilder = New StringBuilder()
+            queryString.Append("DELETE FROM SINHVIEN").Append(" ")
+            queryString.Append("WHERE MASV = " & "@masv").Append(" ")
+            connection = Dbbase.GetSqlConnection()
+            connection.Open()
+            Dim command As SqlCommand = New SqlCommand(queryString.ToString(), connection)
+            command.CommandType = CommandType.Text
+            Dim parameters As SqlParameterCollection = command.Parameters
+            parameters.AddWithValue("@masv", masv)
+            Dim res As Integer = command.ExecuteNonQuery()
+
+            If res <> 1 Then
+                GoTo TheEnd
+            End If
+
+            retDel = True
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+            GoTo TheEnd
+        Finally
+            Dbbase.Close(connection)
+        End Try
+
+TheEnd:
+        Return retDel
+    End Function
+
+    Public Function Update(ByVal masv As String, ByVal capnhat As SinhVien) As Boolean
+        Dim retUpdate As Boolean = False
+        Dim connection As SqlConnection = Nothing
+
+        Try
+            Dim queryString As StringBuilder = New StringBuilder()
+            queryString.Append("UPDATE SINHVIEN").Append(" ")
+            queryString.Append("SET").Append(" ")
+            queryString.Append("  HOTEN = " & "@hoten" & ",").Append(" ")
+            queryString.Append("  NGAYSINH = " & "@ngaysinh" & ",").Append(" ")
+            queryString.Append("  NOISINH = " & "@noisinh" & ",").Append(" ")
+            queryString.Append("  GIOITINH = " & "@gioitinh" & " ").Append(" ")
+            queryString.Append("WHERE").Append(" ")
+            queryString.Append("  MASV = " & "@masv").Append(" ")
+            connection = Dbbase.GetSqlConnection()
+            connection.Open()
+            Dim command As SqlCommand = New SqlCommand(queryString.ToString(), connection)
+            command.CommandType = CommandType.Text
+            Dim parameters As SqlParameterCollection = command.Parameters
+            parameters.AddWithValue("@masv", masv)
+            parameters.AddWithValue("@hoten", capnhat.HoTen)
+            parameters.AddWithValue("@ngaysinh", capnhat.NgaySinh)
+            parameters.AddWithValue("@noisinh", capnhat.NoiSinh)
+            parameters.AddWithValue("@gioitinh", capnhat.GioiTinh)
+            Dim res As Integer = command.ExecuteNonQuery()
+
+            If res <> 1 Then
+                GoTo TheEnd
+            End If
+
+            retUpdate = True
+        Catch ex As Exception
+            _errorMsg = ex.Message
+            GoTo TheEnd
+        Finally
+            Dbbase.Close(connection)
+        End Try
+
+TheEnd:
+        Return retUpdate
+    End Function
+
+
+
 
 End Class

@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports System.IO
+Imports ClosedXML.Excel
 Imports SampleVB.DbFunction
 
 Public Class Form1
@@ -28,7 +30,10 @@ Public Class Form1
         Return
     End Sub
 
-    Public Sub Load()
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Private Sub LoadData()
         con = Dbbase.GetSqlConnection()
         con.Open()
         Dim dbFunction As New DbFunction
@@ -42,8 +47,6 @@ Public Class Form1
             DGVSinhVien.Rows.Add()
 
             'Set dữ liệu vào Column
-
-
             Dim newRow As DataGridViewRow = DGVSinhVien.Rows(index)
             newRow.Cells("ColMaSV").Value = sinhVienInfos(index).MaSV
             newRow.Cells("ColHoTen").Value = sinhVienInfos(index).HoTen
@@ -54,57 +57,71 @@ Public Class Form1
         Return
     End Sub
 
-    'Public Sub disp_data()
-    '    cmd = con.CreateCommand()
-    '    cmd.CommandType = CommandType.Text
-    '    cmd.CommandText = "select * from SinhVien"
-    '    cmd.ExecuteNonQuery()
-    '    Dim dt As New DataTable()
-    '    Dim da As New SqlDataAdapter(cmd)
-    '    da.Fill(dt)
-    '    DGVSinhVien.DataSource = dt
-    'End Sub
-
+    ''' <summary>
+    ''' Nút sự kiện thêm datagridview
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btnThem_Click(sender As Object, e As EventArgs) Handles btnThem.Click
-        If con.State = ConnectionState.Open Then
-            con.Close()
+        Try
+            Dim dbFunction As New DbFunction()
+            Dim modelsSV As New SinhVien()
 
-        End If
-        con.Open()
+            modelsSV.MaSV = txtMaSV.Text
+            modelsSV.HoTen = txtHoTen.Text
+            modelsSV.NgaySinh = txtNgaySinh.Text
+            modelsSV.NoiSinh = txtNoiSinh.Text
+            modelsSV.GioiTinh = txtGioiTinh.Text
 
-        cmd = con.CreateCommand()
-        cmd.CommandType = CommandType.Text
-        cmd.CommandText = "insert into SinhVien values('" + txtMaSV.Text + "',N'" + txtHoTen.Text + "','" + txtNgaySinh.Text + "',N'" + txtNoiSinh.Text + "',N'" + txtGioiTinh.Text + "')"
-        cmd.ExecuteNonQuery()
-        'disp_data()
-        Load()
+            dbFunction.Insert(modelsSV)
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        End Try
+        LoadData()
 
     End Sub
 
+    ''' <summary>
+    ''' Nút sự kiện xóa datagridview
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btnXoa_Click(sender As Object, e As EventArgs) Handles btnXoa.Click
-        If con.State = ConnectionState.Open Then
-            con.Close()
 
-        End If
-        con.Open()
-        cmd = con.CreateCommand()
-        cmd.CommandType = CommandType.Text
-        cmd.CommandText = "delete from SinhVien where MASV='" + txtMaSV.Text + "'"
-        cmd.ExecuteNonQuery()
-        'disp_data()
+        Try
+            Dim dbFunction As New DbFunction()
+            Dim retDel = dbFunction.Delete(txtMaSV.Text)
+
+            If retDel = False Then
+                dbFunction.GetMessage()
+            End If
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        End Try
+        LoadData()
     End Sub
 
+    ''' <summary>
+    ''' Nút sự kiện cập nhật datagridview
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btnSua_Click(sender As Object, e As EventArgs) Handles btnSua.Click
-        If con.State = ConnectionState.Open Then
-            con.Close()
+        Try
+            Dim dbFunction As New DbFunction()
+            Dim modelsSV As New SinhVien()
 
-        End If
-        con.Open()
-        cmd = con.CreateCommand()
-        cmd.CommandType = CommandType.Text
-        cmd.CommandText = "update SinhVien set HOTEN = N'" + txtHoTen.Text + "', NGAYSINH ='" + txtNgaySinh.Text + "', NOISINH = N'" + txtNoiSinh.Text + "', GIOITINH = N'" + txtGioiTinh.Text + "' where MASV =" + txtMaSV.Text + ""
-        cmd.ExecuteNonQuery()
-        'disp_data()
+            modelsSV.HoTen = txtHoTen.Text
+            modelsSV.NgaySinh = txtNgaySinh.Text
+            modelsSV.NoiSinh = txtNoiSinh.Text
+            modelsSV.GioiTinh = txtGioiTinh.Text
+
+            dbFunction.Update(txtMaSV.Text, modelsSV)
+
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+        End Try
+        LoadData()
     End Sub
 
 
@@ -134,4 +151,5 @@ Public Class Form1
             txtGioiTinh.Text = dr.GetString(4).ToString()
         End While
     End Sub
+
 End Class
